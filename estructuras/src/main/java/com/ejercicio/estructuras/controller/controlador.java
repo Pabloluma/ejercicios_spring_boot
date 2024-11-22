@@ -30,5 +30,42 @@ public class controlador {
         return resultado1;
     }
 
+    @PostMapping("/promedioCalificaciones")
+    String promedioCalificaciones(@RequestParam String calificaciones) {
+        String[] arrayCalificaciones = calificaciones.split(",");
+        int suma = 0;
+        for (int i = 0; i < arrayCalificaciones.length; i++) {
+            suma += Integer.parseInt(arrayCalificaciones[i]);
+        }
+        int avg = suma / arrayCalificaciones.length;
+        String pass = "";
+        if (avg >= 5){
+            pass =  "Aprueba";
+        }else {
+            pass =  "No aprueba";
+        }
+        return "La nota media es " + avg + ". El alumno " + pass;
+    }
+
+    @PostMapping("/calcularIMC")
+    String CalculaIMC(@RequestParam int peso, @RequestParam int altura) {
+//        Formula del IMC
+        double calcula = peso / Math.pow((double) altura /100, 2);
+
+        String categoria = "";
+        if (calcula < 18.5){
+            categoria = "bajo peso";
+        } else if (calcula >= 18.5 && calcula <= 24.9) {
+            categoria = "normal";
+        } else if (calcula >= 25 && calcula <= 29.9) {
+            categoria = "sobrepeso";
+        } else if (calcula >= 30) {
+            categoria = "obesidad";
+        }
+        return "El usuario tiene " + categoria + " su IMC es " + calcula;
+
+    }
+
+
 
 }
